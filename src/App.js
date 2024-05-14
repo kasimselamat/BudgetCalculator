@@ -4,6 +4,7 @@ import './App.css';
 import BudgetCalculator from './Components/BudgetCalculator/BudgetCalculator.js'
 import Navigation from './Components/Navigation/Navigation.js'
 import TableResult from './Components/TableResult/TableResult.js'
+import Signin from './Components/Signin/Signin.js'
 
 class App extends Component {
 
@@ -11,6 +12,7 @@ class App extends Component {
     super();
     this.state = {
       isSignedIn: false,
+      route: 'signin',
       income: '',
       needs: '',
       wants: '',
@@ -76,12 +78,29 @@ class App extends Component {
       }
   }
 
+  onChangeRoute = (destination) => {
+    this.setState({ route:destination })
+  }
+
   render() {
     return (
       <div className="App">
         <Navigation />
-        <BudgetCalculator onIncomeChanges={ this.onIncomeChanges } onButtonEnter={ this.onButtonEnter }/>
-        <TableResult />
+        { this.state.route === 'home'
+          ? <div>
+              <BudgetCalculator onIncomeChanges={ this.onIncomeChanges } onButtonEnter={ this.onButtonEnter }/>
+              <TableResult />
+            </div>
+          : (this.state.route === 'signin')
+            ? <Signin onChangeRoute={ this.onChangeRoute }/>
+            : <div>
+                <BudgetCalculator onIncomeChanges={ this.onIncomeChanges } onButtonEnter={ this.onButtonEnter }/>
+                <TableResult />
+              </div>
+            
+        }
+        
+        
       </div>
     );
 
