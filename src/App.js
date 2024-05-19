@@ -5,6 +5,7 @@ import BudgetCalculator from './Components/BudgetCalculator/BudgetCalculator.js'
 import Navigation from './Components/Navigation/Navigation.js'
 import TableResult from './Components/TableResult/TableResult.js'
 import Signin from './Components/Signin/Signin.js'
+import Register from './Components/Register/Register.js'
 
 class App extends Component {
 
@@ -85,7 +86,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navigation />
+        <Navigation onChangeRoute={ this.onChangeRoute } isSignedIn={ this.state.isSignedIn }/>
         { this.state.route === 'home'
           ? <div>
               <BudgetCalculator onIncomeChanges={ this.onIncomeChanges } onButtonEnter={ this.onButtonEnter }/>
@@ -94,8 +95,7 @@ class App extends Component {
           : (this.state.route === 'signin')
             ? <Signin onChangeRoute={ this.onChangeRoute }/>
             : <div>
-                <BudgetCalculator onIncomeChanges={ this.onIncomeChanges } onButtonEnter={ this.onButtonEnter }/>
-                <TableResult />
+                <Register onChangeRoute={ this.onChangeRoute }/>
               </div>
             
         }
