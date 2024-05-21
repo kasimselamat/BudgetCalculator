@@ -41,45 +41,53 @@ class App extends Component {
   };
 
   onButtonEnter = (event) => {
+    event.preventDefault();
       // if there are no value entered, alert the user
-      if (this.state.income === '') {
+      if (this.state.income == '') {
           alert('Enter Your Income Amount');
       } else {
-        this.state.income = Number(this.state.income);
-        this.state.needs = (50 / 100) * this.state.income;
-        this.state.wants = (30 / 100) * this.state.income;
-        this.state.savings = (20 / 100) * this.state.income;
+        this.setState({ income: Number(this.state.income),
+                        needs: (50 / 100) * this.state.income,
+                        wants: (30 / 100) * this.state.income,
+                        savings: (20 / 100) * this.state.income
+                      }, () => {
+                        console.log('needs: ', this.state.needs);
 
-        const newRow = document.createElement("tr");
+                        const newRow = document.createElement("tr");
 
-        const cell1 = document.createElement("td");
-        cell1.className = "pv3 pr3 bb b--black-20";
-        cell1.textContent = this.state.income;
+                        const cell1 = document.createElement("td");
+                        cell1.className = "pv3 pr3 bb b--black-20";
+                        cell1.textContent = this.state.income;
 
-        const cell2 = document.createElement("td");
-        cell2.className = "pv3 pr3 bb b--black-20";
-        cell2.textContent = this.state.needs;
+                        const cell2 = document.createElement("td");
+                        cell2.className = "pv3 pr3 bb b--black-20";
+                        cell2.textContent = this.state.needs;
 
-        const cell3 = document.createElement("td");
-        cell3.className = "pv3 pr3 bb b--black-20";
-        cell3.textContent = this.state.wants;
+                        const cell3 = document.createElement("td");
+                        cell3.className = "pv3 pr3 bb b--black-20";
+                        cell3.textContent = this.state.wants;
 
-        const cell4 = document.createElement("td");
-        cell4.className = "pv3 pr3 bb b--black-20";
-        cell4.textContent = this.state.savings;
+                        const cell4 = document.createElement("td");
+                        cell4.className = "pv3 pr3 bb b--black-20";
+                        cell4.textContent = this.state.savings;
 
-        newRow.appendChild(cell1);
-        newRow.appendChild(cell2);
-        newRow.appendChild(cell3);
-        newRow.appendChild(cell4);
+                        newRow.appendChild(cell1);
+                        newRow.appendChild(cell2);
+                        newRow.appendChild(cell3);
+                        newRow.appendChild(cell4);
 
-        const tableBody = document.getElementById('table-body');
-        tableBody.appendChild(newRow);
-
+                        const tableBody = document.getElementById('table-body');
+                        tableBody.appendChild(newRow);
+                      });
       }
   }
 
   onChangeRoute = (destination) => {
+    if(destination === 'home') {
+      this.setState({ isSignedIn: true })
+    } else if(destination === 'signin' || destination === 'register') {
+      this.setState({ isSignedIn: false })
+    }
     this.setState({ route:destination })
   }
 
@@ -93,9 +101,9 @@ class App extends Component {
               <TableResult />
             </div>
           : (this.state.route === 'signin')
-            ? <Signin onChangeRoute={ this.onChangeRoute }/>
+            ? <Signin onChangeRoute={ this.onChangeRoute } />
             : <div>
-                <Register onChangeRoute={ this.onChangeRoute }/>
+                <Register onChangeRoute={ this.onChangeRoute} />
               </div>
             
         }

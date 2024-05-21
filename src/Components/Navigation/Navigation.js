@@ -22,7 +22,11 @@ class Navigation extends React.Component {
                             className='f4 pointer pa4'>Register
                         </p>
                     </nav>
-                :   <p className='f4 pointer pa4'>Sign Out</p>
+                :   <nav style={{display:'flex', justifyContent:'flex-end'}}>
+                        <p  onClick={() => this.props.onChangeRoute('signin')}
+                            className='f4 pointer pa4'>Sign Out
+                        </p>
+                    </nav>
             }
             </div>
         );
